@@ -15,9 +15,13 @@ export default function GPA() {
     O: 10,
     "A+": 9,
     A: 8,
-    B: 7,
-    C: 6,
-    D: 5,
+    "B+": 7,
+    B: 6,
+    C: 5,
+    W: 0,
+    "*": 0,
+    Ab: 0,
+    I: 0,
     F: 0,
   };
 
@@ -30,11 +34,24 @@ export default function GPA() {
   };
 
   const getRemark = (gpa) => {
-    if (gpa >= 9) return { remark: "Outstanding performance!", gif: gifs.outstanding };
-    if (gpa >= 8) return { remark: "Great job! You're doing really well.", gif: gifs.great };
-    if (gpa >= 7) return { remark: "Good work! Keep pushing forward.", gif: gifs.good };
-    if (gpa >= 5) return { remark: "You’re on track. Aim higher next time!", gif: gifs.average };
-    return { remark: "Don’t be discouraged! Reflect and try again.", gif: gifs.tryAgain };
+    if (gpa >= 9)
+      return { remark: "Outstanding performance!", gif: gifs.outstanding };
+    if (gpa >= 8)
+      return {
+        remark: "Great job! You're doing really well.",
+        gif: gifs.great,
+      };
+    if (gpa >= 7)
+      return { remark: "Good work! Keep pushing forward.", gif: gifs.good };
+    if (gpa >= 5)
+      return {
+        remark: "You’re on track. Aim higher next time!",
+        gif: gifs.average,
+      };
+    return {
+      remark: "Don’t be discouraged! Reflect and try again.",
+      gif: gifs.tryAgain,
+    };
   };
 
   const toggleTheme = () => {
@@ -64,6 +81,7 @@ export default function GPA() {
         return;
       }
     }
+
     let totalCredits = 0;
     let weightedGrades = 0;
 
@@ -75,7 +93,8 @@ export default function GPA() {
       totalCredits += numericCredits;
     });
 
-    const calculatedGpa = totalCredits > 0 ? (weightedGrades / totalCredits).toFixed(2) : 0;
+    const calculatedGpa =
+      totalCredits > 0 ? (weightedGrades / totalCredits).toFixed(2) : 0;
     setGpa(calculatedGpa);
 
     setShowModal(true);
@@ -84,26 +103,27 @@ export default function GPA() {
   const { remark, gif } = getRemark(gpa);
 
   return (
-    <div className={`min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center p-5`}>
-      {/* Header Section */}
+    <div
+      className={`min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center p-5`}
+    >
       <header className="w-full flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200">GPA Calculator</h1>
-        {/* <button
-          onClick={toggleTheme}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Toggle {theme === "light" ? "Dark" : "Light"} Mode
-        </button> */}
+        <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200">
+          SRM GPA Calculator
+        </h1>
       </header>
 
-      {/* Main Content Section */}
       <div className="flex flex-col justify-center items-center flex-grow w-full">
         {gpa > 9 && <Confetti width={width} height={height} />}
 
         {subjects.map((subject, index) => (
-          <div key={index} className="flex flex-col md:flex-row gap-4 items-center mb-4">
+          <div
+            key={index}
+            className="flex flex-col md:flex-row gap-4 items-center mb-4"
+          >
             <div className="flex flex-col">
-              <label className="mb-1 font-medium text-gray-800 dark:text-gray-200">Credits</label>
+              <label className="mb-1 font-medium text-gray-800 dark:text-gray-200">
+                Credits
+              </label>
               <input
                 type="number"
                 min="0"
@@ -114,7 +134,9 @@ export default function GPA() {
             </div>
 
             <div className="flex flex-col">
-              <label className="mb-1 font-medium text-gray-800 dark:text-gray-200">Grade</label>
+              <label className="mb-1 font-medium text-gray-800 dark:text-gray-200">
+                Grade
+              </label>
               <select
                 value={subject.grade}
                 onChange={(e) => handleChange(index, "grade", e.target.value)}
@@ -131,22 +153,23 @@ export default function GPA() {
           </div>
         ))}
 
-        <button
-          onClick={handleAddSubject}
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-        >
-          Add Subject
-        </button>
+        <div className="flex flex-wrap space-x-2 justify-center align-middle content-center">
+          <button
+            onClick={handleAddSubject}
+            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          >
+            Add Subject
+          </button>
 
-        <button
-          onClick={calculateGPA}
-          className="bg-green-500 text-white px-4 py-2 rounded mt-4"
-        >
-          Calculate GPA
-        </button>
+          <button
+            onClick={calculateGPA}
+            className="bg-green-500 text-white px-4 py-2 rounded mt-4"
+          >
+            Calculate GPA
+          </button>
+        </div>
       </div>
 
-      {/* Success Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg max-w-md">
@@ -171,6 +194,42 @@ export default function GPA() {
           </div>
         </div>
       )}
+
+      {/* Footer Section */}
+      <footer className="w-full bg-gradient-to-r text-white py-6 mt-6">
+        <div className="flex flex-col items-center">
+          <p className="text-lg font-bold">Made with ❤️ by Punit</p>
+          <div className="mt-2">
+            <a
+              href="https://github.com/Punit173"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-200 mx-2"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/punit-joshi-6402a3271/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-200 mx-2"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://instagram.com/punittt_pj"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-200 mx-2"
+            >
+              Instagram
+            </a>
+          </div>
+          <p className="mt-2 text-sm">
+            © {new Date().getFullYear()} Punit Joshi. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
